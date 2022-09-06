@@ -10,14 +10,18 @@ const cookieParser = require('cookie-parser')
 
 const compression = require('compression')
 const cors = require('cors')
-const globalErrorHandler = require('./Handler/Error.handler')
-
+const globalErrorHandler = require('./Handler/Error.handler');
+const AppError = require('./Utils/AppError');
+const indexRouter = require('./Routes/index.routes')
 const app = express();
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'Views'))
 app.enable('trust proxy');
 app.use(cors());
 app.options('*', cors())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
+
 const limiter = rateLimit({
   max: 500,
   windowMs: 60 * 60 * 1000,
@@ -39,12 +43,16 @@ app.use(compression());
 // Test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
+  console.log(req.requestTime)
   // console.log(req.cookies);
   next();
 });
 
 
-
+app.use('/api/v1', indexRouter)
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+})
 
 app.use(globalErrorHandler);
 

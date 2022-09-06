@@ -1,4 +1,4 @@
-const AppError = require("./../Utils/AppError");
+const AppError = require("../Utils/AppError");
 
 const handleCastErrorDB = (err) => {
   const message = `Invalid ${err.path} : ${err.value}`;
@@ -26,6 +26,7 @@ const handleJWTExpiredError = () => {
 };
 
 const sendErrorDev = (err, req, res) => {
+    console.log(req.originalUrl)
   if (req.originalUrl.startsWith("/api")) {
     return res.status(err.statusCode).json({
       status: err.status,
@@ -34,7 +35,7 @@ const sendErrorDev = (err, req, res) => {
       stack: err.stack,
     });
   } else {
-    res.status(200).render("base", {
+    res.status(200).render("Base", {
       title: "something went wrong",
       purpose: err.message,
     });
@@ -65,10 +66,11 @@ const sendErrorProd = (err, req, res) => {
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
-
   if (process.env.NODE_ENV === "development") {
+    console.log("development")
     sendErrorDev(err, req, res);
   } else if (process.env.NODE_ENV === "production") {
+    console.log("production")
     let error = { ...err };
     error.message = err.message;
     if (error.name === "cast error") error = handleCastErrorDB(error);
