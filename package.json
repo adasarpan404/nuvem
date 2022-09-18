@@ -4,11 +4,11 @@
   "description": "arpan das",
   "main": "index.js",
   "lint-staged": {
-		"src/**/*.{js,jsx,ts,tsx,json,css,scss,md,pug}": [
-			"prettier --write",
-			"git add"
-		]
-	},
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md,pug}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "scripts": {
     "start": "nodemon server"
   },
@@ -21,25 +21,25 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "express-mongo-sanitize": "^2.1.0",
     "express": "^4.17.1",
-    "mongoose": "^5.5.2",
-    "xss-clean": "^0.1.1",
+    "express-mongo-sanitize": "^2.1.0",
     "express-rate-limit": "^5.5.1",
     "helmet": "^4.6.0",
-    "validator": "^13.7.0",
     "husky": "^3.1.0",
+    "jsonwebtoken": "^8.5.1",
     "lint-staged": "^9.5.0",
+    "mongoose": "^5.5.2",
     "prettier": "^1.19.1",
-    "pug": "^3.0.0"
+    "pug": "^3.0.0",
+    "validator": "^13.7.0",
+    "xss-clean": "^0.1.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
   },
   "husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
-	}
-
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 }
